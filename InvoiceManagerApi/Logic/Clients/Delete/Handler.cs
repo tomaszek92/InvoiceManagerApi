@@ -1,5 +1,6 @@
 ﻿using InvoiceManagerApi.Models;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,7 +17,10 @@ namespace InvoiceManagerApi.Logic.Clients.Delete
 
         public async Task<Client> Handle(Command request, CancellationToken cancellationToken)
         {
-            var client = await _dbContext.Clients.FindAsync(request.Id, cancellationToken);
+            var client = await _dbContext
+                .Clients
+                .FirstOrDefaultAsync(c => c.Id == request.Id, cancellationToken);
+
             if (client == null)
             {
                 return null;

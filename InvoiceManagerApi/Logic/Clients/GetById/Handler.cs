@@ -17,8 +17,9 @@ namespace InvoiceManagerApi.Logic.Clients.GetById
 
         public async Task<Client> Handle(Query request, CancellationToken cancellationToken)
         {
-            return await _dbContext.Clients.FirstAsync(client => client.Id == request.Id, cancellationToken);
-            //return await _dbContext.Clients.FindAsync(new object[] { request.Id }, cancellationToken);
+            return await _dbContext
+                .Clients
+                .FirstOrDefaultAsync(client => client.Id == request.Id, cancellationToken);
         }
     }
 }

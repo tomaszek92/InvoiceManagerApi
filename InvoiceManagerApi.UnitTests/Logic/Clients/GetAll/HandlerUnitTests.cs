@@ -10,26 +10,22 @@ using Xunit;
 
 namespace InvoiceManagerApi.UnitTests.Logic.Clients.GetAll
 {
-    public class HandlerUnitTests : IDisposable
+    public class HandlerUnitTests : ApplicationDbContextUnitTests
     {
-        private readonly Fixture _fixture = new Fixture();
-        private readonly TestApplicationDbContextProvider _testApplicationDbContextProvider = new TestApplicationDbContextProvider();
-        private readonly IApplicationDbContext _dbContext;
         private readonly Handler _handler;
 
         public HandlerUnitTests()
         {
-            _dbContext = _testApplicationDbContextProvider.DbContextInstance;
-            _handler = new Handler(_dbContext);
+            _handler = new Handler(DbContext);
         }
 
         [Fact]
-        public async Task should_get_all_clients()
+        public async Task Should_get_all_clients()
         {
             // Act
-            var expectedClients = _fixture.CreateMany<Client>().ToList();
-            await _dbContext.Clients.AddRangeAsync(expectedClients);
-            await _dbContext.SaveChangesAsync();
+            var expectedClients = Fixture.CreateMany<Client>().ToList();
+            await DbContext.Clients.AddRangeAsync(expectedClients);
+            await DbContext.SaveChangesAsync();
 
             // Act
             var dbClients = await _handler.Handle(new Query(), CancellationToken.None);
@@ -38,11 +34,6 @@ namespace InvoiceManagerApi.UnitTests.Logic.Clients.GetAll
             dbClients
                 .Should()
                 .BeEquivalentTo(expectedClients);
-        }
-
-        public void Dispose()
-        {
-            _testApplicationDbContextProvider.Dispose();
         }
     }
 }

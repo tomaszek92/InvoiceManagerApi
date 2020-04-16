@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace InvoiceManagerApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/clients")]
     [ApiController]
     public class ClientsController : ControllerBase
     {
@@ -23,6 +23,7 @@ namespace InvoiceManagerApi.Controllers
         {
             var query = new Logic.Clients.GetAll.Query();
             var clients = await _mediator.Send(query, cancellationToken);
+
             return Ok(clients);
         }
 
