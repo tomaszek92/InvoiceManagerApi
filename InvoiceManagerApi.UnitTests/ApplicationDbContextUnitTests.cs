@@ -7,21 +7,13 @@ namespace InvoiceManagerApi.UnitTests
 {
     public class ApplicationDbContextUnitTests : IDisposable
     {
-        protected readonly Fixture Fixture;
+        protected readonly IFixture Fixture;
         protected readonly TestApplicationDbContextProvider _testApplicationDbContextProvider = new TestApplicationDbContextProvider();
         protected readonly IApplicationDbContext DbContext;
 
         protected ApplicationDbContextUnitTests()
         {
-            Fixture = new Fixture();
-            
-            Fixture
-                .Behaviors
-                .OfType<ThrowingRecursionBehavior>().ToList()
-                .ForEach(b => Fixture.Behaviors.Remove(b));
-
-            Fixture.Behaviors.Add(new OmitOnRecursionBehavior());
-            
+            Fixture = UnitTestFixture.Get();
             DbContext = _testApplicationDbContextProvider.DbContextInstance;
         }
 

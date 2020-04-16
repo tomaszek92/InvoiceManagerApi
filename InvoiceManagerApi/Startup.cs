@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FluentValidation;
+using InvoiceManagerApi.Extensions;
+using InvoiceManagerApi.Logic.PipelineBehaviours;
 using InvoiceManagerApi.Models;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -30,6 +33,8 @@ namespace InvoiceManagerApi
         {
             services.AddDbContext<IApplicationDbContext, ApplicationDbContext>(options => options.UseInMemoryDatabase("InvoiceManager"));
             services.AddMediatR(typeof(Startup));
+            services.AddValidatorsFromAssembly(typeof(Startup).Assembly);
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
             services.AddControllers();
         }
 
@@ -40,6 +45,8 @@ namespace InvoiceManagerApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseFluentValidationExceptionHandler();
 
             app.UseHttpsRedirection();
 
