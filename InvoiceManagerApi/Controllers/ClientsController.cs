@@ -19,7 +19,7 @@ namespace InvoiceManagerApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Client>>> GetClients(CancellationToken cancellationToken)
+        public async Task<ActionResult<List<Client>>> GetClients(CancellationToken cancellationToken)
         {
             var query = new Logic.Clients.GetAll.Query();
             var clients = await _mediator.Send(query, cancellationToken);
@@ -61,7 +61,7 @@ namespace InvoiceManagerApi.Controllers
             var command = new Logic.Clients.Create.Command(client);
             var addedClient = await _mediator.Send(command, cancellationToken);
 
-            return CreatedAtAction("GetClient", new { id = addedClient.Id }, client);
+            return CreatedAtAction(nameof(GetClient), new { id = addedClient.Id }, client);
         }
 
         [HttpDelete("{id}")]

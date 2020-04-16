@@ -1,13 +1,13 @@
 ﻿using AutoFixture;
 using FluentAssertions;
-using InvoiceManagerApi.Logic.Clients.GetAll;
+using InvoiceManagerApi.Logic.Invoices.GetAll;
 using InvoiceManagerApi.Models;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace InvoiceManagerApi.UnitTests.Logic.Clients.GetAll
+namespace InvoiceManagerApi.UnitTests.Logic.Invoices.GetAll
 {
     public class HandlerUnitTests : ApplicationDbContextUnitTests
     {
@@ -19,20 +19,20 @@ namespace InvoiceManagerApi.UnitTests.Logic.Clients.GetAll
         }
 
         [Fact]
-        public async Task Should_get_all_clients()
+        public async Task Should_get_all_invoices()
         {
             // Act
-            var expectedClients = Fixture.CreateMany<Client>().ToList();
-            await DbContext.Clients.AddRangeAsync(expectedClients);
+            var expectedInvoices = Fixture.CreateMany<Invoice>().ToList();
+            await DbContext.Invoices.AddRangeAsync(expectedInvoices);
             await DbContext.SaveChangesAsync();
 
             // Act
-            var dbClients = await _handler.Handle(new Query(), CancellationToken.None);
+            var dbInvoices = await _handler.Handle(new Query(), CancellationToken.None);
 
             // Assert
-            dbClients
+            dbInvoices
                 .Should()
-                .BeEquivalentTo(expectedClients);
+                .BeEquivalentTo(expectedInvoices);
         }
     }
 }

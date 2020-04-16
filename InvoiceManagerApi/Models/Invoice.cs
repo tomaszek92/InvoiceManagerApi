@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace InvoiceManagerApi.Models
 {
@@ -18,7 +17,7 @@ namespace InvoiceManagerApi.Models
         public int Paytime { get; set; }
         public PaymentType PaymentType { get; set; }
         public bool IsPayed { get; set; }
-        public IEnumerable<InvoiceRow> Rows { get; set; }
+        public ICollection<InvoiceRow> Rows { get; set; }
         public decimal PriceNet => Rows.Sum(r => r.UnitPriceNet * r.Count);
         public decimal PriceGross => Rows.Sum(r => r.UnitPriceGross * r.Count);
     }

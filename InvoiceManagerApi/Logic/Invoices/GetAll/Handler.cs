@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace InvoiceManagerApi.Logic.Clients.GetAll
+namespace InvoiceManagerApi.Logic.Invoices.GetAll
 {
-    public class Handler : IRequestHandler<Query, List<Client>>
+    public class Handler : IRequestHandler<Query, List<Invoice>>
     {
         private readonly IApplicationDbContext _dbContext;
 
@@ -16,9 +16,9 @@ namespace InvoiceManagerApi.Logic.Clients.GetAll
             _dbContext = dbContext;
         }
 
-        public async Task<List<Client>> Handle(Query request, CancellationToken cancellationToken)
+        public async Task<List<Invoice>> Handle(Query request, CancellationToken cancellationToken)
         {
-            return await _dbContext.Clients.ToListAsync(cancellationToken);
+            return await _dbContext.Invoices.ToListAsync(cancellationToken);
         }
     }
 }
