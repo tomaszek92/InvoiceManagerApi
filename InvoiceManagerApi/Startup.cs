@@ -41,6 +41,9 @@ namespace InvoiceManagerApi
 
             app.UseFluentValidationExceptionHandler();
 
+            // Nie powinno siê pozwalaæ ka¿demu na dostêp, ale na potrzeby dema, to wystarczy.
+            app.UseCors(options => options.AllowAnyOrigin());
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
