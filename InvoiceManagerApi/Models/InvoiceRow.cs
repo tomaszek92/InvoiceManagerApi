@@ -10,7 +10,9 @@ namespace InvoiceManagerApi.Models
         public string Name { get; set; }
         public int Count { get; set; }
         public int VatRate { get; set; }
+        [Column(TypeName = "decimal(18,2)")]
         public decimal UnitPriceNet { get; set; }
+        [Column(TypeName = "decimal(18,2)")]
         public decimal UnitPriceGross { get; set; }
 
         [ForeignKey(nameof(Invoice))]
