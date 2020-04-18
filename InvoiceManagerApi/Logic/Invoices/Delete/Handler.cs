@@ -19,6 +19,7 @@ namespace InvoiceManagerApi.Logic.Invoices.Delete
         {
             var invoice = await _dbContext
                 .Invoices
+                .Include(invoice => invoice.Rows)
                 .FirstOrDefaultAsync(i => i.Id == request.Id, cancellationToken);
 
             if (invoice == null)
