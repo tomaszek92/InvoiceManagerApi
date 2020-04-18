@@ -19,6 +19,7 @@ namespace InvoiceManagerApi.Logic.Invoices.GetById
         {
             return await _dbContext
                 .Invoices
+                .Include(invoice => invoice.Rows)
                 .FirstOrDefaultAsync(invoice => invoice.Id == request.Id, cancellationToken);
         }
     }

@@ -18,7 +18,10 @@ namespace InvoiceManagerApi.Logic.Invoices.GetAll
 
         public async Task<List<Invoice>> Handle(Query request, CancellationToken cancellationToken)
         {
-            return await _dbContext.Invoices.ToListAsync(cancellationToken);
+            return await _dbContext
+                .Invoices
+                .Include(invoice => invoice.Rows)
+                .ToListAsync(cancellationToken);
         }
     }
 }
