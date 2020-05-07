@@ -45,6 +45,12 @@ namespace InvoiceManagerApi
                 app.UseDeveloperExceptionPage();
             }
 
+            using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetService<IApplicationDbContext>();
+                dbContext.Database.Migrate();
+            }
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
